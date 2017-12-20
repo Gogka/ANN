@@ -21,6 +21,7 @@ class ANN():
                 network_result = self.think(training_value)
                 self.set_delta_for_last_layer(training_value, network_result)
                 self.set_deltas(self.layers[-1].deltas)
+                print "\n"
 
 
 
@@ -36,6 +37,11 @@ class ANN():
         if len(self.layers) == 1 or layer_index == (len(self.layers) * (-1)) - 1:
             return
         layer = self.layers[layer_index]
+        ##
+        print layer.neurons[0].incoming_weights
+        print previous_deltas
+        print "\n"
+        ##
         layer.deltas = self.get_derivative(layer.outputs) * [sum(neuron.incoming_weights * previous_deltas) for neuron in self.layers[layer_index+1].neurons]
         self.set_deltas(layer.deltas, layer_index-1)
 
